@@ -1,0 +1,123 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+      body {
+    
+    background-image: url("./image/background.jpg");
+
+}
+button
+  {
+   display: flex;
+   background-color: red;
+   margin: 5px;
+   padding: 5px;
+  }
+  
+    .heading {
+    font-weight: bold;
+    font-size: 30px;
+    letter-spacing: 0.02em;
+    padding: 0 0 30px 0;
+    padding-top: 20px;
+    padding: 10px;
+    background-color: aqua;
+    border: 5px solid red;
+    margin: 0 0 30px 0;;
+  }
+  input {
+    -webkit-appearance: none;
+
+  
+  }
+  label{
+    font-style: italic;
+    font-size: larger;
+    font-weight: bolder;
+
+  }
+  .result{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    font-weight: bold;
+    font-size: 15px;
+    
+  }
+      
+      </style>
+</head>
+<body>
+    <h1 class="heading">Weather App</h1>
+<form onsubmit="getWeather();return false">
+
+
+
+    <label for="cityName">Enter city name:</label>
+<input required type="text" name="" id="CityName" placeholder="search your city">
+<button type="submit">Get weather data</button>
+
+
+
+
+
+</form>
+<div>
+  
+
+<div >
+    <h2>Real Time Weather Data</h2>
+    <div class="result">
+        <p id="location"></p>
+        <p id="country"></p>
+        <p id="dateandtime"></p>
+        <p id="teperatureincalcius"></p>
+        <p id="temperatureinfarenhite"></p>
+        <p id="windspeed"></p> 
+        <p id="areacondition"></p>
+        <p id="humidity"></p>
+        
+    </div>
+</div>
+</div>
+</div>
+<script>
+
+
+function getWeather(){
+
+//d0f3d0ebee504539b1863528223107
+
+let cityname = document.querySelector(`#cityname`).value
+axios.get(`https:api.weatherapi.com/v1/current.json?key=d0f3d0ebee504539b1863528223107&q=${cityname}&aqi=no`)
+  .then(function (response) {
+    let weatherData = response.data
+    document.querySelector(`#location`).innerHTML = `Location: ${weatherData.location.name}`;
+                document.querySelector(`#country`).innerHTML = `Country: ${weatherData.location.country}`;
+                document.querySelector(`#dateandtime`).innerHTML = `Date and Time:    ${weatherData.location.localtime}`;
+                document.querySelector(`#teperatureincalcius`).innerHTML = `Temperature in Calcius: ${weatherData.current.temp_c} `;
+                document.querySelector(`#temperatureinfarenhite`).innerHTML = `Temperature in Farenhite: ${weatherData.current.temp_f}`;
+                document.querySelector(`#windspeed`).innerHTML = `Wind Speed: ${weatherData.current.wind_kph} Km/h`;
+                document.querySelector(`#areacondition`).innerHTML = `Area Condition:: ${weatherData.current.condition.text}`;
+                document.querySelector(`#humidity`).innerHTML = `Humidity: ${weatherData.current.humidity}%`;
+                
+    
+  })
+  .catch(function (error) {
+     
+    console.log(error);
+  })
+  
+
+
+}
+
+</script>
+</body>
+</html>
